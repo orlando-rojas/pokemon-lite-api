@@ -1,4 +1,14 @@
 class TrainersController < ApplicationController
+    def update
+      @trainer = Trainer.find(params[:id])
+
+      if @trainer.update_attributes(trainer_params)
+        render json: @trainer
+      else
+        render json: @trainer.errors, status: :unprocessable_entity
+      end
+    end
+    
     def create
         @trainer = Trainer.new(trainer_params)
         if @trainer.save

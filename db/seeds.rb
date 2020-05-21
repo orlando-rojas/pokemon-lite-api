@@ -14,19 +14,19 @@ data = CSV.read('db/data.csv', headers: true, header_converters: :symbol)
 
 data.each do |row|
   trainer = Trainer.find_or_create_by!(
-      name: row[:t_name],
-      gender: row[:t_gender],
-      home_region: row[:t_region],
-      status: row[:t_team_member],
-      wins: row[:wins],
-      losses: row[:losses]
+    name: row[:t_name],
+    gender: row[:t_gender],
+    home_region: row[:t_region],
+    status: row[:t_team_member],
+    wins: row[:wins],
+    losses: row[:losses]
   )
 
   pokemon = Pokemon.find_or_create_by!(
-      name: row[:name],
-      main_ability: row[:main_ability],
-      main_type: row[:main_type],
-      base_experience: row[:base_exp]
+    name: row[:name],
+    main_ability: row[:main_ability],
+    main_type: row[:main_type],
+    base_experience: row[:base_exp]
   )
 
   if trainer.id && pokemon.id
