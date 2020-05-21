@@ -1,8 +1,14 @@
 class TrainersController < ApplicationController
 
     def index
-        @trainer = Trainer.all
-        render json: @trainer
+        if params[:trainer_id]
+            @trainer = Trainer.find(params[:trainer_id])
+            @pokemon = @trainer.pokemons
+            render json: @pokemon 
+        else
+            @trainer = Trainer.all   
+            render json: @trainer 
+        end
     end
 
     def show
