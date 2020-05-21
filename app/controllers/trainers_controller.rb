@@ -1,12 +1,12 @@
 class TrainersController < ApplicationController
   class PokemonsController < ApplicationController
-    def create
-      @trainer = Trainer.new(trainer_params)
+    def update
+      @trainer = Trainer.find(params[:id])
 
-      if @trainer.save
+      if @trainer.update_attributes(trainer_params)
         render json: @trainer
       else
-        render json: @trainer.errors
+        render json: @trainer.errors, status: :unprocessable_entity
       end
     end
 
