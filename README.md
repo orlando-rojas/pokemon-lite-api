@@ -57,7 +57,7 @@ Product Manager (Diego of course), access to the repo where the seed data is
 stored. Check the readme file and complete all the steps. You will be ready to
 procced when the `seeds.rb` file is being working correctly.
 
-## 4. Implement a Restful API for main resources
+### 4. Implement a Restful API for main resources
 
 This task includes the creation of the controller and action methods for each
 resource and their respective routes.
@@ -73,7 +73,7 @@ DELETE . . . /pokemons/:id . . . Destroy a pokemon
 
 Same for Trainer and Battle Record.
 
-## 5. [Optional] Implement a Restful API for nested resources
+### 5. [Optional] Implement a Restful API for nested resources
 
 For the nested resource Trainer->Pokemon:\
 GET . . . /trainers/:id/pokemons . . . . . List all the pokemons of one trainer\
@@ -84,6 +84,6 @@ DELETE . . . /trainers/:id/pokemons/:id . . . Destroy a pokemon for one trainer
 
 Same the reverse scenario Pokemon->Trainer.
 
-## 6. Create a Pull Request to the master branch of the codeable repo.
+### 6. Create a Pull Request to the master branch of the codeable repo.
 
-## 7. Have a great weekend!
+### 7. Have a great weekend!
