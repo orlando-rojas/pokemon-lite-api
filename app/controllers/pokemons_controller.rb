@@ -1,41 +1,66 @@
+# frozen_string_literal: true
+
 class PokemonsController < ApplicationController
-    def index
-        @pokemon = Pokemon.all
-        render json: @pokemon
-    end
+  def index
+    @pokemon = if params[:trainer_id].nil?
+                 Pokemon.all
+               else
+                 Trainer.find(params[:trainer_id]).pokemons
+               end
+    render json: @pokemon
+  end
 
-    def show
-        @pokemon = Pokemon.find(params[:id])
-        render json: @pokemon
-    end
+  def show
+    @pokemon = if params[:trainer_id].nil?
+                 Pokemon.find(params[:id])
+               else
+                 Trainer.find(params[:trainer_id]).pokemons.find(params[:id])
+               end
+    render json: @pokemon
+  end
 
-    def create
-        @pokemon = Pokemon.new(pokemon_params)
-        if @pokemon.save
-            render json: @pokemon
-        else
-            render json: @pokemon.errors
-        end
-    end
-
-    def update
-      @pokemon = Pokemon.find(params[:id])
-      if @pokemon.update_attributes(pokemon_params)
+  def create
+    @pokemon = Pokemon.new(pokemon_params)
+    if params[:trainer_id].nil?
+      if @pokemon.save
         render json: @pokemon
       else
-        render json: @pokemon.errors, status: :unprocessable_entity
+        render json: @pokemon.errors
       end
+    else
+      @trainer = Trainer.find(params[:trainer_id])
+      @trainer.pokemons << @pokemon
+      render json: @trainer.pokemons
     end
+  end
 
-    def destroy
-      @pokemon = Pokemon.find(params[:id])
-      @pokemon.destroy
-      # head :no_content
-      render json: { msg: "Pikachu #{params[:id]} had a short circuit" }
+  def update
+    @pokemon = if params[:trainer_id].nil?
+                 Pokemon.find(params[:id])
+               else
+                 Trainer.find(params[:trainer_id]).pokemons.find(params[:id])
+               end
+    if @pokemon.update_attributes(pokemon_params)
+      render json: @pokemon
+    else
+      render json: @pokemon.errors, status: :unprocessable_entity
     end
+  end
 
-    private
-    def pokemon_params
-        params.require(:pokemon).permit(:name, :base_experience, :main_type, :main_ability)
-    end
+  def destroy
+    @pokemon = if params[:trainer_id].nil?
+                 Pokemon.find(params[:id])
+               else
+                 Trainer.find(params[:trainer_id]).pokemons.find(params[:id])
+               end
+    @pokemon.destroy
+    # head :no_content
+    render json: { msg: "Pikachu #{params[:id]} had a short circuit" }
+  end
+
+  private
+
+  def pokemon_params
+    params.require(:pokemon).permit(:name, :base_experience, :main_type, :main_ability)
+  end
 end
