@@ -10,4 +10,5 @@ Rails.application.routes.draw do
   resources :pokemons do
     resources :trainers
   end
+
 end
